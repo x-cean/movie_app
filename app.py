@@ -24,3 +24,4 @@ with app.app_context():
     if not inspector.get_table_names():
         db.create_all()
 
+data_manager = SQLiteDataManager(db)
