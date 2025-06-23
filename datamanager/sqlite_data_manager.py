@@ -8,7 +8,7 @@ from .sql_data_models import User, Movie
 class SQLiteDataManager(DataManagerInterface):
     def __init__(self, db_object):
         try:
-            self.db = db_object
+            self.db = db_object # initiate, self.db = db object (SQLAlchemy instance)
         except SQLAlchemyError as e:
             print(e)
 

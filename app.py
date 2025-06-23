@@ -16,7 +16,7 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
 
-db.init_app(app)
+db.init_app(app) # links the instance of SQLAlchemy to the Flask application instance app
 
 # create tables if they do not exist
 with app.app_context():
