@@ -23,3 +23,4 @@ with app.app_context():
     inspector = inspect(db.engine)
     if not inspector.get_table_names():
         db.create_all()
+
