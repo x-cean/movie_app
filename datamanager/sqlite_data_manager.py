@@ -12,11 +12,22 @@ class SQLiteDataManager(DataManagerInterface):
         except SQLAlchemyError as e:
             print(e)
 
+
     def get_all_users(self):
-        pass
+        if User:
+            users = User.query.all()
+        else:
+            users = []
+        return users
+
 
     def get_user_movies(self, user_id: int):
-        pass
+        user = User.query.get(user_id, None)
+        if user:
+            return user.movies
+        else:
+            return 'User not found'
+
 
     def add_user(self, user: User):
         pass
@@ -30,7 +41,6 @@ class SQLiteDataManager(DataManagerInterface):
     def delete_movie(self, movie: Movie):
         pass
 
-    def get_movie_via_id(self, movie_id: int):
-        pass
+
 
 

@@ -25,3 +25,7 @@ with app.app_context():
         db.create_all()
 
 data_manager = SQLiteDataManager(db)
+
+with app.app_context():
+    users = data_manager.get_all_users()
+    print(users)
