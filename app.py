@@ -31,9 +31,43 @@ data_manager = SQLiteDataManager(db)
 #     users = data_manager.get_all_users()
 #     print(users)
 
+
 @app.route('/')
 def home():
     return "Welcome to MovieWeb App!"
+
+
+@app.route('/users', methods=['GET'])
+def list_users():
+    users = data_manager.get_all_users()
+    return str(users)
+
+
+@app.route('/users/<user_id>', methods=['GET'])
+def list_user_movies(user_id: int):
+    return "Welcome to MovieWeb App!"
+
+
+@app.route('/add_user', methods=['GET', 'POST'])
+def add_user(user_id: int):
+    return "Welcome to MovieWeb App!"
+
+
+@app.route('/users/<user_id>/add_movie', methods=['GET', 'POST'])
+def add_movie(user_id: int):
+    return "Welcome to MovieWeb App!"
+
+
+@app.route('/users/<user_id>/update_movie/<movie_id>', methods=['GET', 'POST'])
+def update_movie(user_id: int, movie_id: int):
+    return "Welcome to MovieWeb App!"
+
+
+@app.route('/users/<user_id>/delete_movie/<movie_id>', methods=['POST'])
+def delete_movie(user_id: int, movie_id: int):
+    return "Welcome to MovieWeb App!"
+
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5002, debug=True)
