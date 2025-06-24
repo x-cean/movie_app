@@ -2,10 +2,10 @@ import os
 
 from flask import Flask, render_template, request, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import inspect
+from sqlalchemy import inspect, insert
 
 from datamanager.sqlite_data_manager import SQLiteDataManager
-from datamanager.sql_data_models import db, User, Movie
+from datamanager.sql_data_models import db, User, Movie, user_movies
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -45,13 +45,29 @@ def list_user_movies(user_id: int):
 
 
 @app.route('/add_user', methods=['GET', 'POST'])
-def add_user(user_id: int):
-    return "Welcome to MovieWeb App!"
+def add_user():
+    user = User(name='hana')
+    db.session.add(user)
+    db.session.commit()
+    return str(user)
 
 
 @app.route('/users/<user_id>/add_movie', methods=['GET', 'POST'])
 def add_movie(user_id: int):
-    return "Welcome to MovieWeb App!"
+    # movie info
+    movie = Movie(name='Pulp Fiction', year=1994, rating=8, director='Quentin Tarantino')
+
+    # add movie
+    db.session.add(movie)
+    db.session.commit()
+
+    # update the relationship table too
+    relate_user_movi = insert(user_movies).values(user_id=user_id, movie_id=movie.id)
+
+    # execute and commit
+    db.session.execute(relate_user_movi)
+    db.session.commit()
+    return str(movie)
 
 
 @app.route('/users/<user_id>/update_movie/<movie_id>', methods=['GET', 'POST'])
