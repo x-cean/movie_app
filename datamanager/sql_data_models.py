@@ -31,7 +31,7 @@ class User(db.Model):
 class Movie(db.Model):
     __tablename__ = 'movies'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    title = db.Column(db.String, nullable=False)
+    name = db.Column(db.String, nullable=False)
     director = db.Column(db.String)
     year = db.Column(db.Integer)
     rating = db.Column(db.Integer)

@@ -19,17 +19,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
 db.init_app(app) # links the instance of SQLAlchemy to the Flask application instance app
 
 # create tables if they do not exist
-with app.app_context():
+with app.app_context(): # activate the app context to use db
     inspector = inspect(db.engine)
     if not inspector.get_table_names():
         db.create_all()
 
 data_manager = SQLiteDataManager(db)
-
-# just for testing whether data_manager worked
-# with app.app_context():
-#     users = data_manager.get_all_users()
-#     print(users)
 
 
 @app.route('/')
@@ -45,7 +40,8 @@ def list_users():
 
 @app.route('/users/<user_id>', methods=['GET'])
 def list_user_movies(user_id: int):
-    return "Welcome to MovieWeb App!"
+    movies = data_manager.get_user_movies(user_id)
+    return str(movies)
 
 
 @app.route('/add_user', methods=['GET', 'POST'])
