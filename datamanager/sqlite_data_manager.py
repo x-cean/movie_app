@@ -56,8 +56,16 @@ class SQLiteDataManager(DataManagerInterface):
             print(e)
 
 
-    def update_movie(self, movie: Movie):
+    def update_movie(self, movie: Movie, new_name: str=None, new_director: str=None,
+                     new_year: int=None, new_rating: int=None):
+        try:
+            if isinstance(movie, Movie):
+                if new_name:
+                    movie.name = new_name # have to think about how to update
+        except SQLAlchemyError as e:
+            print(e)
         pass
+
 
     def delete_movie(self, movie: Movie):
         pass
