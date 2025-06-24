@@ -1,8 +1,8 @@
-from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import insert, delete
 from sqlalchemy.exc import SQLAlchemyError
 
 from .data_manager_interface import DataManagerInterface
-from .sql_data_models import db, User, Movie
+from .sql_data_models import db, User, Movie, user_movies
 
 
 class SQLiteDataManager(DataManagerInterface):
@@ -45,10 +45,18 @@ class SQLiteDataManager(DataManagerInterface):
             print(e)
 
 
-    def add_movie(self, movie: Movie):
+    def add_movie(self, user_id: int, movie: Movie):
         try:
             if isinstance(movie, Movie):
+                # update the movies-table
                 self.db.session.add(movie)
+                self.db.session.commit()
+
+                # update the relationship table too
+                relate_user_movi = insert(user_movies).values(user_id=user_id, movie_id=movie.id)
+
+                # execute and commit
+                self.db.session.execute(relate_user_movi)
                 self.db.session.commit()
             else:
                 raise TypeError("Movie must be a Movie instance")
@@ -56,10 +64,11 @@ class SQLiteDataManager(DataManagerInterface):
             print(e)
 
 
-    def update_movie(self, movie: Movie, new_name: str=None, new_director: str=None,
+    def update_movie(self, movie_id: int, new_name: str=None, new_director: str=None,
                      new_year: int=None, new_rating: int=None):
         try:
-            if isinstance(movie, Movie):
+            movie = Movie.query.get(movie_id)
+            if movie is not None:
                 if new_name is not None:
                     movie.name = new_name # have to think about how to update
                 if new_director is not None:
@@ -70,16 +79,22 @@ class SQLiteDataManager(DataManagerInterface):
                     movie.rating = new_rating
                 self.db.session.commit()
             else:
-                raise TypeError("Movie must be a Movie instance")
+                print("Movie not found in the database")
         except SQLAlchemyError as e:
             print(e)
             self.db.session.rollback() # undo any partial change
 
 
-    def delete_movie(self, movie: Movie):
+    def delete_movie(self, movie_id: int, user_id: int):
         try:
-            if isinstance(movie, Movie) and Movie.query.get(movie.id):
+            movie = Movie.query.get(movie_id)
+            if movie is not None:
+                # delete it from movies
                 self.db.session.delete(movie)
+                self.db.session.commit()
+                # delete it from the relationship table
+                delete_user_movie = delete(user_movies).where(user_id=user_id, movie_id=movie.id)
+                self.db.session.execute(delete_user_movie)
                 self.db.session.commit()
             else:
                 print("Movie not found in the database")

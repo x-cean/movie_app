@@ -47,8 +47,7 @@ def list_user_movies(user_id: int):
 @app.route('/add_user', methods=['GET', 'POST'])
 def add_user():
     user = User(name='hana')
-    db.session.add(user)
-    db.session.commit()
+    data_manager.add_user(user)
     return str(user)
 
 
@@ -56,29 +55,21 @@ def add_user():
 def add_movie(user_id: int):
     # movie info
     movie = Movie(name='Pulp Fiction', year=1994, rating=8, director='Quentin Tarantino')
-
     # add movie
-    db.session.add(movie)
-    db.session.commit()
-
-    # update the relationship table too
-    relate_user_movi = insert(user_movies).values(user_id=user_id, movie_id=movie.id)
-
-    # execute and commit
-    db.session.execute(relate_user_movi)
-    db.session.commit()
+    data_manager.add_movie(movie=movie, user_id=user_id)
     return str(movie)
 
 
 @app.route('/users/<user_id>/update_movie/<movie_id>', methods=['GET', 'POST'])
-def update_movie(user_id: int, movie_id: int):
-    return "Welcome to MovieWeb App!"
+def update_movie(movie_id: int):
+    data_manager.update_movie(movie_id, new_rating=5)
+    return 'updated'
 
 
-@app.route('/users/<user_id>/delete_movie/<movie_id>', methods=['POST'])
+@app.route('/users/<user_id>/delete_movie/<movie_id>', methods=['GET'])
 def delete_movie(user_id: int, movie_id: int):
-    return "Welcome to MovieWeb App!"
-
+    data_manager.delete_movie(movie_id=movie_id, user_id=user_id)
+    return 'deleted'
 
 
 if __name__ == '__main__':
