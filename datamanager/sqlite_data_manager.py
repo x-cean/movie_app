@@ -60,11 +60,20 @@ class SQLiteDataManager(DataManagerInterface):
                      new_year: int=None, new_rating: int=None):
         try:
             if isinstance(movie, Movie):
-                if new_name:
+                if new_name is not None:
                     movie.name = new_name # have to think about how to update
+                if new_director is not None:
+                    movie.director = new_director
+                if new_year is not None:
+                    movie.year = new_year
+                if new_rating is not None:
+                    movie.rating = new_rating
+                self.db.session.commit()
+            else:
+                raise TypeError("Movie must be a Movie instance")
         except SQLAlchemyError as e:
             print(e)
-        pass
+            self.db.session.rollback() # undo any partial change
 
 
     def delete_movie(self, movie: Movie):
