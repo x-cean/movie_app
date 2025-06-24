@@ -61,12 +61,12 @@ def add_movie(user_id: int):
 
 
 @app.route('/users/<user_id>/update_movie/<movie_id>', methods=['GET', 'POST'])
-def update_movie(movie_id: int):
-    data_manager.update_movie(movie_id, new_rating=5)
+def update_movie(movie_id: int, user_id: int):
+    data_manager.update_movie(movie_id=movie_id, new_rating=5)
     return 'updated'
 
 
-@app.route('/users/<user_id>/delete_movie/<movie_id>', methods=['GET'])
+@app.route('/users/<user_id>/delete_movie/<movie_id>', methods=['POST'])
 def delete_movie(user_id: int, movie_id: int):
     data_manager.delete_movie(movie_id=movie_id, user_id=user_id)
     return 'deleted'

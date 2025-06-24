@@ -38,11 +38,13 @@ class Movie(db.Model):
 
     def __repr__(self):
         return (f"Movie(id: {self.id}, name: {self.name}, "
-                f"director: {self.director}, year: {self.year})")
+                f"director: {self.director}, year: {self.year},"
+                f"rating: {self.rating})")
 
     def __str__(self):
         return (f"Movie(id: {self.id}, name: {self.name}, "
-                f"director: {self.director}, year: {self.year})")
+                f"director: {self.director}, year: {self.year},"
+                f"rating: {self.rating})")
 
 
 

@@ -93,7 +93,9 @@ class SQLiteDataManager(DataManagerInterface):
                 self.db.session.delete(movie)
                 self.db.session.commit()
                 # delete it from the relationship table
-                delete_user_movie = delete(user_movies).where(user_id=user_id, movie_id=movie.id)
+                delete_user_movie = delete(user_movies).where(
+                    (user_movies.c.user_id == user_id) & (user_movies.c.movie_id == movie_id)
+                )
                 self.db.session.execute(delete_user_movie)
                 self.db.session.commit()
             else:
