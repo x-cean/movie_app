@@ -37,8 +37,8 @@ class SQLiteDataManager(DataManagerInterface):
     def add_user(self, user: User):
         try:
             if isinstance(user, User):
-                db.session.add(user)
-                db.session.commit()
+                self.db.session.add(user)
+                self.db.session.commit()
             else:
                 raise TypeError("User must be a User instance")
         except SQLAlchemyError as e:
@@ -48,8 +48,8 @@ class SQLiteDataManager(DataManagerInterface):
     def add_movie(self, movie: Movie):
         try:
             if isinstance(movie, Movie):
-                db.session.add(movie)
-                db.session.commit()
+                self.db.session.add(movie)
+                self.db.session.commit()
             else:
                 raise TypeError("Movie must be a Movie instance")
         except SQLAlchemyError as e:
@@ -77,7 +77,15 @@ class SQLiteDataManager(DataManagerInterface):
 
 
     def delete_movie(self, movie: Movie):
-        pass
+        try:
+            if isinstance(movie, Movie) and Movie.query.get(movie.id):
+                self.db.session.delete(movie)
+                self.db.session.commit()
+            else:
+                print("Movie not found in the database")
+        except SQLAlchemyError as e:
+            print(e)
+            self.db.session.rollback()
 
 
 
