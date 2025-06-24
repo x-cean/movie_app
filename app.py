@@ -26,6 +26,14 @@ with app.app_context():
 
 data_manager = SQLiteDataManager(db)
 
-with app.app_context():
-    users = data_manager.get_all_users()
-    print(users)
+# just for testing whether data_manager worked
+# with app.app_context():
+#     users = data_manager.get_all_users()
+#     print(users)
+
+@app.route('/')
+def home():
+    return "Welcome to MovieWeb App!"
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5002, debug=True)
