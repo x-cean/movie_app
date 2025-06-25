@@ -43,6 +43,12 @@ h1 {
     color: #4F4F4F;
 }
 
+.flashes h3 {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    color: #b00020;
+    font-size: 1.1em;
+}
+
 .users, .movies {
     background-color: #FFF;
     border: 1px solid #DDD;

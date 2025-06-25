@@ -18,12 +18,6 @@
     <form action="{{ url_for('add_movie', user_id=user_id) }}" method="POST">
         <label for="movie_name">Movie Name:</label>
         <input type="text" id="movie_name" name="movie_name" required>
-        <label for="movie_director">Director:</label>
-        <input type="text" id="movie_director" name="movie_director">
-        <label for="movie_year">Year:</label>
-        <input type="text" id="movie_year" name="movie_year">
-        <label for="movie_rating">Rating:</label>
-        <input type="text" id="movie_rating" name="movie_rating">
         <input type="submit" value="Submit">
     </form>
 </body>

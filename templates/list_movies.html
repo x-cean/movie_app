@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Movies - MovieWeb App</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:600&display=swap"
+          rel="stylesheet">
 </head>
 <body>
     <div class="navbar">
@@ -20,7 +22,7 @@
         {% if messages %}
             <ul class="flashes">
             {% for message in messages %}
-                <li>{{ message }}</li>
+                <li><h3><em>{{ message }}</em></h3></li>
             {% endfor %}
             </ul>
         {% endif %}

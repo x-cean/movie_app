@@ -6,6 +6,7 @@ from sqlalchemy import inspect, insert
 
 from datamanager.sql_data_models import db, User, Movie, user_movies
 from datamanager.sqlite_data_manager import SQLiteDataManager
+from datamanager.api_omdb import search_movie
 
 
 # get the path safely, if data/ does not exist, create it
@@ -58,7 +59,7 @@ def add_user():
         user_name = request.form.get('user_name')
         user = User(name=user_name)
         data_manager.add_user(user)
-        flash(f'User {user.name} added!')
+        flash(f'User: {user.name} added!')
         return redirect(url_for('list_user_movies', user_id=user.id))
     return render_template('add_user.html')
 
@@ -70,15 +71,25 @@ def add_movie(user_id: int):
     user_name = data_manager.get_username_by_id(user_id)
     if request.method == 'POST':
         # movie info
-        movie = Movie(
-            name=request.form.get('movie_name'),
-            year=request.form.get('movie_year'),
-            rating=request.form.get('movie_rating'),
-            director=request.form.get('movie_director')
-        )
+        movie_name = request.form.get('movie_name')
+        movie_info = search_movie(movie_name)
+        if 'Error' in movie_info: # no movie found in api database
+            movie = Movie(name=movie_name)
+            flash(f'Detailed info not found! Please update manually!')
+        else: # movie found
+            movie_name = movie_info.get('Title')
+            movie_year = movie_info.get('Year')
+            movie_rating = movie_info.get('imdbRating')
+            movie_director = movie_info.get('Director')
+            movie = Movie(
+                name=movie_name,
+                year=movie_year,
+                rating=movie_rating,
+                director=movie_director
+            )
         # add movie
         data_manager.add_movie(movie=movie, user_id=user_id)
-        flash(f'Movie {movie.name} added to island of {user_name}!')
+        flash(f'Movie: {movie.name} added to island of {user_name}!')
         return redirect(url_for('list_user_movies', user_id=user_id))
     return render_template('add_movie.html', user_id=user_id,
                            user_name=user_name)
