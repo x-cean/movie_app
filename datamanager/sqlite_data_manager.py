@@ -119,10 +119,7 @@ class SQLiteDataManager(DataManagerInterface):
     def get_movie_by_id(self, movie_id: int):
         try:
             movie = Movie.query.get(movie_id)
-            if movie is not None:
-                return movie
-            else:
-                return None
+            return movie
         except SQLAlchemyError as e:
             print(e)
 

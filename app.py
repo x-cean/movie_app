@@ -96,26 +96,30 @@ def add_movie(user_id: int):
 
 @app.route('/users/<user_id>/update_movie/<movie_id>', methods=['GET', 'POST'])
 def update_movie(movie_id: int, user_id: int):
-    # TODO: BUG! when movie does not exist!
 
     # this is for html template to get prefilled text
     movie = data_manager.get_movie_by_id(movie_id)
     user_name = data_manager.get_username_by_id(user_id)
 
-    if request.method == 'POST':
-        # collect info from the form
-        new_name = request.form.get('movie_name')
-        new_director = request.form.get('movie_director')
-        new_year = request.form.get('movie_year')
-        new_rating = request.form.get('movie_rating')
-        # update if new info of movie is collected
-        data_manager.update_movie(movie_id=movie_id, user_id=user_id,
-                                  new_name=new_name, new_director=new_director,
-                                  new_year=new_year, new_rating=new_rating)
-        flash(f'Movie {movie.name} updated!')
-        return redirect(url_for('list_user_movies', user_id=user_id))
+    # edge case: movie or user not exist
+    if movie is None or user_name is None:
+        return render_template('404.html'), 404
 
-    return render_template('update_movie.html',
+    else:
+        if request.method == 'POST':
+            # collect info from the form
+            new_name = request.form.get('movie_name')
+            new_director = request.form.get('movie_director')
+            new_year = request.form.get('movie_year')
+            new_rating = request.form.get('movie_rating')
+            # update if new info of movie is collected
+            data_manager.update_movie(movie_id=movie_id, user_id=user_id,
+                                      new_name=new_name, new_director=new_director,
+                                      new_year=new_year, new_rating=new_rating)
+            flash(f'Movie {movie.name} updated!')
+            return redirect(url_for('list_user_movies', user_id=user_id))
+
+        return render_template('update_movie.html',
                            user_id=user_id, movie_id=movie_id, movie=movie,
                            user_name=user_name)
 
