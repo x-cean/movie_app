@@ -45,8 +45,11 @@ def list_users():
 def list_user_movies(user_id: int):
     movies = data_manager.get_user_movies(user_id)
     user_name = data_manager.get_username_by_id(user_id)
-    return render_template('list_movies.html',
+    if user_name is not None:
+        return render_template('list_movies.html',
                            movies=movies, user_id=user_id, user_name=user_name)
+    else:
+        return render_template('404.html'), 404
 
 
 @app.route('/add_user', methods=['GET', 'POST'])
@@ -113,7 +116,7 @@ def delete_movie(user_id: int, movie_id: int):
 
 
 @app.errorhandler(404)
-def page_not_found(e):
+def page_not_found(e, msg=None):
     return render_template('404.html'), 404
 
 
