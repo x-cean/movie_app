@@ -2,9 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieWeb App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-
+    <div class="navbar">
+        <a href="/users">Brows Users</a>
+        <a href="/add_user">Add User</a>
+    </div>
+    <h1>Welcome to My Movie Web!</h1>
+    {% for user in users %}
+    <div class="users">
+        <a href="/users/{{ user.id }}"><h2><em>{{ user.name }}</em></h2></a>
+    </div>
+    {% endfor %}
 </body>
 </html>

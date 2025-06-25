@@ -35,7 +35,7 @@ def home():
 @app.route('/users', methods=['GET'])
 def list_users():
     users = data_manager.get_all_users()
-    return str(users)
+    return render_template('users.html', users=users)
 
 
 @app.route('/users/<user_id>', methods=['GET'])
