@@ -8,9 +8,11 @@ from datamanager.sql_data_models import db, User, Movie, user_movies
 from datamanager.sqlite_data_manager import SQLiteDataManager
 
 
-basedir = os.path.abspath(os.path.dirname(__file__))
-db_path = os.path.join(basedir, 'data', 'data.sqlite')
-
+# get the path safely, if data/ does not exist, create it
+basedir = os.path.abspath(os.path.dirname(__file__)) # get the absolute path
+data_dir = os.path.join(basedir, 'data')
+os.makedirs(data_dir, exist_ok=True) # when the data folder is there, nothing happens
+db_path = os.path.join(data_dir, 'data.sqlite')
 
 app = Flask(__name__)
 
@@ -41,7 +43,7 @@ def list_users():
 @app.route('/users/<user_id>', methods=['GET'])
 def list_user_movies(user_id: int):
     movies = data_manager.get_user_movies(user_id)
-    return str(movies)
+    return render_template('list_movies.html', movies=movies, user_id=user_id)
 
 
 @app.route('/add_user', methods=['GET', 'POST'])
@@ -62,7 +64,7 @@ def add_movie(user_id: int):
 
 @app.route('/users/<user_id>/update_movie/<movie_id>', methods=['GET', 'POST'])
 def update_movie(movie_id: int, user_id: int):
-    data_manager.update_movie(movie_id=movie_id, new_rating=5)
+    data_manager.update_movie(movie_id=movie_id, user_id=user_id, new_rating=5)
     return 'updated'
 
 

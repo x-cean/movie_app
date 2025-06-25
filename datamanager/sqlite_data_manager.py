@@ -64,7 +64,7 @@ class SQLiteDataManager(DataManagerInterface):
             print(e)
 
 
-    def update_movie(self, movie_id: int, new_name: str=None, new_director: str=None,
+    def update_movie(self, user_id: int, movie_id: int, new_name: str=None, new_director: str=None,
                      new_year: int=None, new_rating: int=None):
         try:
             movie = Movie.query.get(movie_id)

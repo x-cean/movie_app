@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieWeb App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <a href="/users">Brows Users</a>
+        <a href="/add_user">Add User</a>
+        <a href="/users/{{ user_id }}/add_movie">Add Movie</a>
+    </div>
+    <h1>Welcome to Island Movie Web!</h1>
+    {% for movie in movies %}
+    <div class="movies">
+        <h2>{{ movie.name }}</h2>
+        <h3><em>Directed by {{ movie.director }}</em></h3>
+        <p>Year: {{ movie.year }} &nbsp;|&nbsp; Rating: {{ movie.rating }}</p>
+        <a href="/users/{{ user_id }}/update_movie/{{ movie.id }}"><button><em>Update</em></button></a>
+        <form action="/users/{{ user_id }}/delete_movie/{{ movie.id }}" method="POST" class="delete">
+            <button type="submit"><em>Delete</em></button>
+        </form>
+    </div>
+    {% endfor %}
+</body>
+</html>
