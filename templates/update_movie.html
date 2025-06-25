@@ -2,9 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieWeb App - Update User Movie</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+    <div class="navbar">
+        <a href="/users">Brows Users</a>
+        <a href="/add_user">Add User</a>
+        <a href="/users/{{ user_id }}/add_movie">Add Movie</a>
+    </div>
 
+    <h1>Hello {{ user_name }} - Updating Movie</h1>
+    <form action="{{ url_for('update_movie', user_id=user_id, movie_id=movie_id) }}"
+          method="POST">
+        <label for="movie_name">Movie Name:</label>
+        <input type="text" id="movie_name" name="movie_name"
+               placeholder="{{ movie.name }}">
+        <label for="movie_director">Director:</label>
+        <input type="text" id="movie_director" name="movie_director"
+               placeholder="{{ movie.director }}">
+        <label for="movie_year">Year:</label>
+        <input type="text" id="movie_year" name="movie_year"
+               placeholder="{{ movie.year }}">
+        <label for="movie_rating">Rating:</label>
+        <input type="text" id="movie_rating" name="movie_rating"
+               placeholder="{{ movie.rating }}">
+        <input type="submit" value="Submit">
+    </form>
 </body>
 </html>

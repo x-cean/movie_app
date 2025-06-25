@@ -69,13 +69,13 @@ class SQLiteDataManager(DataManagerInterface):
         try:
             movie = Movie.query.get(movie_id)
             if movie is not None:
-                if new_name is not None:
+                if new_name:
                     movie.name = new_name # have to think about how to update
-                if new_director is not None:
+                if new_director:
                     movie.director = new_director
-                if new_year is not None:
+                if new_year:
                     movie.year = new_year
-                if new_rating is not None:
+                if new_rating:
                     movie.rating = new_rating
                 self.db.session.commit()
             else:
@@ -110,6 +110,17 @@ class SQLiteDataManager(DataManagerInterface):
             user = User.query.get(user_id)
             if user is not None:
                 return user.name
+            else:
+                return None
+        except SQLAlchemyError as e:
+            print(e)
+
+
+    def get_movie_by_id(self, movie_id: int):
+        try:
+            movie = Movie.query.get(movie_id)
+            if movie is not None:
+                return movie
             else:
                 return None
         except SQLAlchemyError as e:

@@ -81,8 +81,24 @@ def add_movie(user_id: int):
 
 @app.route('/users/<user_id>/update_movie/<movie_id>', methods=['GET', 'POST'])
 def update_movie(movie_id: int, user_id: int):
-    data_manager.update_movie(movie_id=movie_id, user_id=user_id, new_rating=5)
-    return 'updated'
+    # this is for html template to get prefilled text
+    movie = Movie.query.get(movie_id)
+
+    if request.method == 'POST':
+        # collect info from the form
+        new_name = request.form.get('movie_name')
+        new_director = request.form.get('movie_director')
+        new_year = request.form.get('movie_year')
+        new_rating = request.form.get('movie_rating')
+        # update if new info of movie is collected
+        data_manager.update_movie(movie_id=movie_id, user_id=user_id,
+                                  new_name=new_name, new_director=new_director,
+                                  new_year=new_year, new_rating=new_rating)
+        flash(f'Movie {movie.name} updated!')
+        return redirect(url_for('list_user_movies', user_id=user_id))
+
+    return render_template('update_movie.html',
+                           user_id=user_id, movie_id=movie_id, movie=movie)
 
 
 @app.route('/users/<user_id>/delete_movie/<movie_id>', methods=['POST'])
