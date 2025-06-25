@@ -4,8 +4,8 @@ from flask import Flask, render_template, request, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import inspect, insert
 
-from datamanager.sqlite_data_manager import SQLiteDataManager
 from datamanager.sql_data_models import db, User, Movie, user_movies
+from datamanager.sqlite_data_manager import SQLiteDataManager
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
