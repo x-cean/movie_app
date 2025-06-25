@@ -64,16 +64,19 @@ def add_user():
 def add_movie(user_id: int):
     # user name
     user_name = data_manager.get_username_by_id(user_id)
-    # movie info
-    movie = Movie(
-        name=request.form.get('movie_name'),
-        year=request.form.get('movie_year'),
-        rating=request.form.get('movie_rating'),
-        director=request.form.get('movie_director')
-    )
-    # add movie
-    data_manager.add_movie(movie=movie, user_id=user_id)
-    return str(movie)
+    if request.method == 'POST':
+        # movie info
+        movie = Movie(
+            name=request.form.get('movie_name'),
+            year=request.form.get('movie_year'),
+            rating=request.form.get('movie_rating'),
+            director=request.form.get('movie_director')
+        )
+        # add movie
+        data_manager.add_movie(movie=movie, user_id=user_id)
+        flash(f'Movie {movie.name} added to island of {user_name}!')
+        return redirect(url_for('list_user_movies', user_id=user_id))
+    return render_template('add_movie.html', user_id=user_id)
 
 
 @app.route('/users/<user_id>/update_movie/<movie_id>', methods=['GET', 'POST'])
