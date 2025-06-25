@@ -85,6 +85,8 @@ def add_movie(user_id: int):
 
 @app.route('/users/<user_id>/update_movie/<movie_id>', methods=['GET', 'POST'])
 def update_movie(movie_id: int, user_id: int):
+    ### TODO: BUG! when movie does not exist!
+
     # this is for html template to get prefilled text
     movie = data_manager.get_movie_by_id(movie_id)
     user_name = data_manager.get_username_by_id(user_id)
