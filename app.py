@@ -17,6 +17,7 @@ db_path = os.path.join(data_dir, 'data.sqlite')
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
+app.config['SECRET_KEY'] = 'secret_key_one'
 
 db.init_app(app) # links the instance of SQLAlchemy to the Flask application instance app
 
@@ -55,7 +56,7 @@ def add_user():
         user = User(name=user_name)
         data_manager.add_user(user)
         flash(f'User {user.name} added!')
-        return redirect(url_for('user/ {{ user.id }}'))
+        return redirect(url_for('list_user_movies', user_id=user.id))
     return render_template('add_user.html')
 
 

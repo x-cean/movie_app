@@ -12,7 +12,19 @@
         <a href="/add_user">Add User</a>
         <a href="/users/{{ user_id }}/add_movie">Add Movie</a>
     </div>
+
     <h1>Hello, Movie Islander &nbsp;|&nbsp; {{ user_name }} &nbsp;|&nbsp;!</h1>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
     {% for movie in movies %}
     <div class="movies">
         <h2>{{ movie.name }}</h2>
@@ -24,5 +36,6 @@
         </form>
     </div>
     {% endfor %}
+
 </body>
 </html>
