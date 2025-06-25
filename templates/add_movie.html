@@ -14,7 +14,7 @@
         <a href="/users/{{ user_id }}/add_movie">Add Movie</a>
     </div>
 
-    <h1>Hello {{ user_name }} - Adding Movie</h1>
+    <h1>Hello &nbsp;|&nbsp; {{ user_name }} &nbsp;|&nbsp;- Adding Movie</h1>
     <form action="{{ url_for('add_movie', user_id=user_id) }}" method="POST">
         <label for="movie_name">Movie Name:</label>
         <input type="text" id="movie_name" name="movie_name" required>

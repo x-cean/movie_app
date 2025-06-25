@@ -76,13 +76,15 @@ def add_movie(user_id: int):
         data_manager.add_movie(movie=movie, user_id=user_id)
         flash(f'Movie {movie.name} added to island of {user_name}!')
         return redirect(url_for('list_user_movies', user_id=user_id))
-    return render_template('add_movie.html', user_id=user_id)
+    return render_template('add_movie.html', user_id=user_id,
+                           user_name=user_name)
 
 
 @app.route('/users/<user_id>/update_movie/<movie_id>', methods=['GET', 'POST'])
 def update_movie(movie_id: int, user_id: int):
     # this is for html template to get prefilled text
     movie = data_manager.get_movie_by_id(movie_id)
+    user_name = data_manager.get_username_by_id(user_id)
 
     if request.method == 'POST':
         # collect info from the form
@@ -98,7 +100,8 @@ def update_movie(movie_id: int, user_id: int):
         return redirect(url_for('list_user_movies', user_id=user_id))
 
     return render_template('update_movie.html',
-                           user_id=user_id, movie_id=movie_id, movie=movie)
+                           user_id=user_id, movie_id=movie_id, movie=movie,
+                           user_name=user_name)
 
 
 @app.route('/users/<user_id>/delete_movie/<movie_id>', methods=['POST'])
