@@ -10,7 +10,7 @@ img {
     margin: 0 auto;
 }
 
-#audience_picture {
+#audience_picture, #error_picture {
     display: block;
     margin: 40px auto 0 auto; /* 40px top margin, auto left/right, 0 bottom */
 }
