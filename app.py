@@ -66,7 +66,6 @@ def add_user():
 
 @app.route('/users/<user_id>/add_movie', methods=['GET', 'POST'])
 def add_movie(user_id: int):
-    # TODO: API key not received...
     # user name
     user_name = data_manager.get_username_by_id(user_id)
     if request.method == 'POST':
