@@ -105,7 +105,7 @@ class SQLiteDataManager(DataManagerInterface):
             self.db.session.rollback()
 
 
-    def get_user_by_id(self, user_id: int):
+    def get_username_by_id(self, user_id: int):
         try:
             user = User.query.get(user_id)
             if user is not None:

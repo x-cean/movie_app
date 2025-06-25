@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MovieWeb App - Add User</title>
+    <title>MovieWeb App - Add User Movie</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="navbar">
-        <a href="/">Home Page</a>
         <a href="/users">Brows Users</a>
         <a href="/add_user">Add User</a>
+        <a href="/users/{{ user_id }}/add_movie">Add Movie</a>
     </div>
 
     <h1>Add New User!</h1>
-
     <form action="{{ url_for('add_user') }}" method="POST">
         <label for="user_name">User Name:</label>
         <input type="text" id="user_name" name="user_name" required>

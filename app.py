@@ -44,7 +44,7 @@ def list_users():
 @app.route('/users/<user_id>', methods=['GET'])
 def list_user_movies(user_id: int):
     movies = data_manager.get_user_movies(user_id)
-    user_name = data_manager.get_user_by_id(user_id)
+    user_name = data_manager.get_username_by_id(user_id)
     return render_template('list_movies.html',
                            movies=movies, user_id=user_id, user_name=user_name)
 
@@ -52,7 +52,7 @@ def list_user_movies(user_id: int):
 @app.route('/add_user', methods=['GET', 'POST'])
 def add_user():
     if request.method == 'POST':
-        user_name = request.form['user_name']
+        user_name = request.form.get('user_name')
         user = User(name=user_name)
         data_manager.add_user(user)
         flash(f'User {user.name} added!')
@@ -62,8 +62,15 @@ def add_user():
 
 @app.route('/users/<user_id>/add_movie', methods=['GET', 'POST'])
 def add_movie(user_id: int):
+    # user name
+    user_name = data_manager.get_username_by_id(user_id)
     # movie info
-    movie = Movie(name='Pulp Fiction', year=1994, rating=8, director='Quentin Tarantino')
+    movie = Movie(
+        name=request.form.get('movie_name'),
+        year=request.form.get('movie_year'),
+        rating=request.form.get('movie_rating'),
+        director=request.form.get('movie_director')
+    )
     # add movie
     data_manager.add_movie(movie=movie, user_id=user_id)
     return str(movie)
