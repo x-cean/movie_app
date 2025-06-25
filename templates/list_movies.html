@@ -8,6 +8,7 @@
 </head>
 <body>
     <div class="navbar">
+        <a href="/">Home Page</a>
         <a href="/users">Brows Users</a>
         <a href="/add_user">Add User</a>
         <a href="/users/{{ user_id }}/add_movie">Add Movie</a>
@@ -26,7 +27,8 @@
     {% endwith %}
 
     {% for movie in movies %}
-    <div class="movies">
+    <ul class="movies">
+        <li>
         <h2>{{ movie.name }}</h2>
         <h3><em>Directed by {{ movie.director }}</em></h3>
         <p>Year: {{ movie.year }} &nbsp;|&nbsp; Rating: {{ movie.rating }}</p>
@@ -34,7 +36,8 @@
         <form action="/users/{{ user_id }}/delete_movie/{{ movie.id }}" method="POST" class="delete">
             <button type="submit"><em>Delete</em></button>
         </form>
-    </div>
+        </li>
+    </ul>
     {% endfor %}
 
 </body>
