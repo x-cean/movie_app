@@ -34,7 +34,7 @@ class Movie(db.Model):
     name = db.Column(db.String, nullable=False)
     director = db.Column(db.String)
     year = db.Column(db.Integer)
-    rating = db.Column(db.Integer)
+    rating = db.Column(db.Float)
 
     def __repr__(self):
         return (f"Movie(id: {self.id}, name: {self.name}, "
