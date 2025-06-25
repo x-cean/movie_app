@@ -12,11 +12,11 @@
         <a href="/users">Brows Users</a>
         <a href="/add_user">Add User</a>
     </div>
-    <h1>Welcome to Island Movie Web!</h1>
-    {% for user in users %}
-    <div class="users">
-        <a href="/users/{{ user.id }}"><h2><em>{{ user.name }}</em></h2></a>
-    </div>
-    {% endfor %}
+    <h1>Add New User!</h1>
+    <form action="{{ url_for('add_user') }}" method="POST">
+        <label for="user_name">User Name:</label>
+        <input type="text" id="user_name" name="user_name" required>
+        <input type="submit" value="Submit">
+    </form>
 </body>
 </html>

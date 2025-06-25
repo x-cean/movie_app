@@ -105,5 +105,16 @@ class SQLiteDataManager(DataManagerInterface):
             self.db.session.rollback()
 
 
+    def get_user_by_id(self, user_id: int):
+        try:
+            user = User.query.get(user_id)
+            if user is not None:
+                return user.name
+            else:
+                return None
+        except SQLAlchemyError as e:
+            print(e)
+
+
 
 

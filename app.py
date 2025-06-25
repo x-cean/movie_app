@@ -43,14 +43,20 @@ def list_users():
 @app.route('/users/<user_id>', methods=['GET'])
 def list_user_movies(user_id: int):
     movies = data_manager.get_user_movies(user_id)
-    return render_template('list_movies.html', movies=movies, user_id=user_id)
+    user_name = data_manager.get_user_by_id(user_id)
+    return render_template('list_movies.html',
+                           movies=movies, user_id=user_id, user_name=user_name)
 
 
 @app.route('/add_user', methods=['GET', 'POST'])
 def add_user():
-    user = User(name='hana')
-    data_manager.add_user(user)
-    return str(user)
+    if request.method == 'POST':
+        user_name = request.form['user_name']
+        user = User(name=user_name)
+        data_manager.add_user(user)
+        flash(f'User {user.name} added!')
+        return redirect(url_for('user/ {{ user.id }}'))
+    return render_template('add_user.html')
 
 
 @app.route('/users/<user_id>/add_movie', methods=['GET', 'POST'])
