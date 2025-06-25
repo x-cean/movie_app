@@ -1,0 +1,137 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F5F5F5;
+    padding: 20px;
+    color: #333;
+}
+
+img {
+    display: block;
+    margin: 0 auto;
+}
+
+#audience_picture {
+    display: block;
+    margin: 40px auto 0 auto; /* 40px top margin, auto left/right, 0 bottom */
+}
+
+.navbar {
+    background-color: #F5F5F5;
+    overflow: hidden;
+    position: fixed;     /* Make it stick */
+    top: 0;              /* Stick to the top */
+    width: 100%;         /* Full width */
+    z-index: 1000;       /* Stay on top of other elements */
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: #000000;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    background-color: #000000;
+    color: white;
+}
+
+h1 {
+    text-align: center;
+    color: #4F4F4F;
+}
+
+.post {
+    background-color: #FFF;
+    border: 1px solid #DDD;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.post h2 {
+    margin-top: 0;
+}
+
+.post p {
+    margin: 10px 0;
+}
+
+.post button {
+    margin: 5px 5px 2px 0;
+}
+
+form {
+    background-color: #ffffff;
+    border: 1px solid #DDD;
+    padding: 30px;
+    margin: 20px;
+    border-radius: 8px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+form input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    resize: vertical; /* allows user to resize vertically only */
+}
+
+form input[type="submit"] {
+    background-color: #62667d;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+form input[type="submit"]:hover {
+    background-color: #000000;
+}
+
+.delete {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+@media (max-width: 600px) {
+body {
+    padding: 10px;
+}
+
+form {
+    padding: 25px;
+    margin: 10px;
+}
+
+input[type="submit"] {
+    font-size: 18px;
+}
+}

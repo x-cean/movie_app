@@ -27,9 +27,9 @@ with app.app_context(): # activate the app context to use db
 data_manager = SQLiteDataManager(db)
 
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def home():
-    return "Welcome to MovieWeb App!"
+    return render_template('home.html')
 
 
 @app.route('/users', methods=['GET'])
