@@ -12,11 +12,13 @@
         <a href="/users">Brows Users</a>
         <a href="/add_user">Add User</a>
     </div>
-    <h1>Welcome to Island Movie Web!</h1>
+    <h1>Island Movie Web - Users</h1>
     {% for user in users %}
-    <div class="users">
-        <a href="/users/{{ user.id }}"><h2><em>{{ user.name }}</em></h2></a>
-    </div>
+    <ul>
+        <li class="users">
+            <a href="/users/{{ user.id }}"><h2><em>{{ user.name }}</em></h2></a>
+        </li>
+    </ul>
     {% endfor %}
 </body>
 </html>
