@@ -82,7 +82,7 @@ def add_movie(user_id: int):
 @app.route('/users/<user_id>/update_movie/<movie_id>', methods=['GET', 'POST'])
 def update_movie(movie_id: int, user_id: int):
     # this is for html template to get prefilled text
-    movie = Movie.query.get(movie_id)
+    movie = data_manager.get_movie_by_id(movie_id)
 
     if request.method == 'POST':
         # collect info from the form
@@ -103,8 +103,10 @@ def update_movie(movie_id: int, user_id: int):
 
 @app.route('/users/<user_id>/delete_movie/<movie_id>', methods=['POST'])
 def delete_movie(user_id: int, movie_id: int):
+    movie = data_manager.get_movie_by_id(movie_id)
     data_manager.delete_movie(movie_id=movie_id, user_id=user_id)
-    return 'deleted'
+    flash(f'Movie {movie.name} deleted!')
+    return redirect(url_for('list_user_movies', user_id=user_id))
 
 
 if __name__ == '__main__':
