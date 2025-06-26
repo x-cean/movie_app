@@ -8,6 +8,9 @@ from .sql_data_models import db, User, Movie, user_movies
 class SQLiteDataManager(DataManagerInterface):
 
     def __init__(self, db_object):
+        """
+        initiate the database connection
+        """
         try:
             self.db = db_object # initiate, self.db = db object (SQLAlchemy instance)
         except SQLAlchemyError as e:
@@ -15,6 +18,9 @@ class SQLiteDataManager(DataManagerInterface):
 
 
     def get_all_users(self):
+        """
+        returns a list of User objects or empty list
+        """
         try:
             return User.query.all()
         except SQLAlchemyError as e:
@@ -23,6 +29,10 @@ class SQLiteDataManager(DataManagerInterface):
 
 
     def get_user_movies(self, user_id: int):
+        """
+        find user via user_id
+        returns a list of user's Movie objects or empty list
+        """
         try:
             user = User.query.get(user_id)
             if user:
@@ -35,6 +45,9 @@ class SQLiteDataManager(DataManagerInterface):
 
 
     def add_user(self, user: User):
+        """
+        add new user to the database
+        """
         try:
             if isinstance(user, User):
                 self.db.session.add(user)
@@ -46,6 +59,10 @@ class SQLiteDataManager(DataManagerInterface):
 
 
     def add_movie(self, user_id: int, movie: Movie):
+        """
+        find user via user_id
+        add new movie to user's movie collection in database
+        """
         try:
             if isinstance(movie, Movie):
                 # update the movies-table
@@ -66,6 +83,9 @@ class SQLiteDataManager(DataManagerInterface):
 
     def update_movie(self, user_id: int, movie_id: int, new_name: str=None, new_director: str=None,
                      new_year: int=None, new_rating: int=None):
+        """
+        update an existing movie's information in database
+        """
         try:
             movie = Movie.query.get(movie_id)
             if movie is not None:
@@ -86,6 +106,9 @@ class SQLiteDataManager(DataManagerInterface):
 
 
     def delete_movie(self, movie_id: int, user_id: int):
+        """
+        delete movie via user_id and movie_id
+        """
         try:
             movie = Movie.query.get(movie_id)
             if movie is not None:
@@ -106,6 +129,9 @@ class SQLiteDataManager(DataManagerInterface):
 
 
     def get_username_by_id(self, user_id: int):
+        """
+        find username by user_id and return username
+        """
         try:
             user = User.query.get(user_id)
             if user is not None:
@@ -117,6 +143,9 @@ class SQLiteDataManager(DataManagerInterface):
 
 
     def get_movie_by_id(self, movie_id: int):
+        """
+        find movie by movie_id and return the Movie object
+        """
         try:
             movie = Movie.query.get(movie_id)
             return movie

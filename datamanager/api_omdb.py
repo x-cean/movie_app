@@ -13,6 +13,10 @@ else:
 
 
 def search_movie(movie_name: str):
+    """
+    search movie by name and gather movie info
+    return dictionary
+    """
     search_term = movie_name.strip().replace(' ', '+')
     response = requests.get(SEARCH_MOVIE_URL + search_term)
     movie_info = response.json()

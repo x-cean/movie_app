@@ -1,10 +1,9 @@
 import os
 
 from flask import Flask, render_template, request, flash, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import inspect, insert
+from sqlalchemy import inspect
 
-from datamanager.sql_data_models import db, User, Movie, user_movies
+from datamanager.sql_data_models import db, User, Movie
 from datamanager.sqlite_data_manager import SQLiteDataManager
 from datamanager.api_omdb import search_movie
 
@@ -28,6 +27,7 @@ with app.app_context(): # activate the app context to use db
     if not inspector.get_table_names():
         db.create_all()
 
+# data manager object
 data_manager = SQLiteDataManager(db)
 
 
@@ -72,10 +72,10 @@ def add_movie(user_id: int):
         # movie info
         movie_name = request.form.get('movie_name')
         movie_info = search_movie(movie_name)
-        if 'Error' in movie_info: # no movie found in api database
+        if 'Error' in movie_info: # no movie found in the api database
             movie = Movie(name=movie_name)
             flash(f'Detailed info not found! Please update manually!')
-        else: # movie found
+        else: # movie found in the api database
             movie_name = movie_info.get('Title')
             movie_year = movie_info.get('Year')
             movie_rating = movie_info.get('imdbRating')
