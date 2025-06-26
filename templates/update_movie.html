@@ -19,16 +19,17 @@
           method="POST">
         <label for="movie_name">Movie Name:</label>
         <input type="text" id="movie_name" name="movie_name"
-               placeholder="{{ movie.name }}">
+               value="{{ movie.name }}">
         <label for="movie_director">Director:</label>
         <input type="text" id="movie_director" name="movie_director"
-               placeholder="{{ movie.director }}">
+               value="{{ movie.director }}">
         <label for="movie_year">Year:</label>
-        <input type="text" id="movie_year" name="movie_year"
-               placeholder="{{ movie.year }}">
+        <input type="number" id="movie_year" name="movie_year"
+               value="{{ movie.year }}" min="0000" max="2025">
         <label for="movie_rating">Rating:</label>
         <input type="text" id="movie_rating" name="movie_rating"
-               placeholder="{{ movie.rating }}">
+               value="{{ movie.rating }}"
+               pattern="^\d+\.\d$" title="Enter a number with one decimal place, e.g., 8.8">
         <input type="submit" value="Submit">
     </form>
 </body>

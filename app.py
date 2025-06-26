@@ -134,12 +134,13 @@ def delete_movie(user_id: int, movie_id: int):
 
 @app.errorhandler(404)
 def page_not_found(e):
-    # TODO: update the figure
+    # TODO: update the error figure in the future
     return render_template('404.html'), 404
 
 
 @app.errorhandler(405)
 def method_not_allowed(e):
+    # TODO: update the error figure in the future
     return render_template('405.html'), 405
 
 
