@@ -27,11 +27,6 @@ def search_movie(movie_name: str):
     return movie_info
 
 
-movie_example = search_movie('The Godfather')
-print(movie_example)
-print(type(movie_example))
-print(type(movie_example['Year']))
-
 
 
 

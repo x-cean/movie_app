@@ -78,7 +78,17 @@ def add_movie(user_id: int):
         else: # movie found in the api database
             movie_name = movie_info.get('Title')
             movie_year = movie_info.get('Year')
+            # turn year from str(api response) to int
+            try:
+                movie_year = int(movie_year)
+            except (ValueError, TypeError):
+                movie_year = None
             movie_rating = movie_info.get('imdbRating')
+            # turn rating to float
+            try:
+                movie_rating = float(movie_rating)
+            except (ValueError, TypeError):
+                movie_rating = None
             movie_director = movie_info.get('Director')
             movie = Movie(
                 name=movie_name,
@@ -111,7 +121,15 @@ def update_movie(movie_id: int, user_id: int):
             new_name = request.form.get('movie_name')
             new_director = request.form.get('movie_director')
             new_year = request.form.get('movie_year')
+            try:
+                new_year = int(new_year)
+            except (ValueError, TypeError):
+                new_year = None
             new_rating = request.form.get('movie_rating')
+            try:
+                new_rating = float(new_rating)
+            except (ValueError, TypeError):
+                new_rating = None
             # update if new info of movie is collected
             data_manager.update_movie(movie_id=movie_id, user_id=user_id,
                                       new_name=new_name, new_director=new_director,
