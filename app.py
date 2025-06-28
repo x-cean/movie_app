@@ -23,9 +23,7 @@ db.init_app(app) # links the instance of SQLAlchemy to the Flask application ins
 
 # create tables if they do not exist
 with app.app_context(): # activate the app context to use db
-    inspector = inspect(db.engine)
-    if not inspector.get_table_names():
-        db.create_all()
+    db.create_all()
 
 # data manager object
 data_manager = SQLiteDataManager(db)
